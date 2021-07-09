@@ -34,3 +34,6 @@ build/
 
 ### Frontend ###
 node_modules/
+
+### POM build resources ###
+front/node/
