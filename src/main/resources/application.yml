@@ -5,5 +5,7 @@
 #spring.data.mongodb.port=27017
 
 # App Properties
-app.jwtSecret=mySecretKey
-app.jwtExpirationMs=86400000
+app:
+  jwt:
+    secret: mySecretKey
+    expiration-in-ms: 86400000
