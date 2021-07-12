@@ -1,11 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import {HashRouter} from 'react-router-dom'
+import reportWebVitals from './reportWebVitals'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+import './style.css'
+import {AuthProvider} from './context/AuthContext'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <HashRouter>
+      <AuthProvider>
+        <App/>
+      </AuthProvider>
+    </HashRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
