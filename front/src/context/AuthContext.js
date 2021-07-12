@@ -20,6 +20,14 @@ export const AuthProvider = ({children}) => {
     })
   }
 
+  const signUp = (signUpRequest) => {
+    return request({
+      url: `${API_BASE_URL}/auth/signup`,
+      method: 'POST',
+      body: JSON.stringify(signUpRequest)
+    })
+  }
+
   const logout = () => {
     localStorage.removeItem(ACCESS_TOKEN)
     setCurrentUser(null)
@@ -38,7 +46,7 @@ export const AuthProvider = ({children}) => {
   },)
 
   return (
-    <AuthContext.Provider value={{currentUser, login, logout}}>
+    <AuthContext.Provider value={{currentUser, login, signUp, logout}}>
       {children}
     </AuthContext.Provider>
   )

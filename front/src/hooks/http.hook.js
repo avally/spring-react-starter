@@ -18,12 +18,10 @@ export const useHttp = () => {
       const data = await res.json()
       console.log('data', data)
       if (!res.ok) {
-        throw new Error(data)
+        throw new Error(data.message)
       }
       return data
-    } catch (e) {
-      console.log('error', e.message)
-    } finally {
+    }  finally {
       setLoading(false)
     }
   }, [])
