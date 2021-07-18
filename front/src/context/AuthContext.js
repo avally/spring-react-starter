@@ -9,6 +9,7 @@ export function useAuth() {
 }
 
 export const AuthProvider = ({children}) => {
+  const [accessToken, setAccessToken] = useState(null)
   const [currentUser, setCurrentUser] = useState(null)
   const {request} = useHttp()
 
@@ -34,27 +35,38 @@ export const AuthProvider = ({children}) => {
       method: 'POST'
     }).catch(() => {
       localStorage.removeItem(ACCESS_TOKEN)
-      setCurrentUser(null)
+      setAccessToken(null)
     }).finally(() => {
       localStorage.removeItem(ACCESS_TOKEN)
+      setAccessToken(null)
       setCurrentUser(null)
     })
   }
 
-  const getCurrentUser = (token) => {
-  }
+  // const getCurrentUser = (token) => {
+  // }
 
   //get user at CRA loaded
   useEffect(() => {
     console.log('####useEffect call####')
     const token = localStorage.getItem(ACCESS_TOKEN)
     if (token) {
-      setCurrentUser(token)
+      setAccessToken(token)
     }
-  },)
+  })
+
+  useEffect(() => {
+    console.log('getMe call')
+    if (accessToken) {
+      request({
+        url: `${API_BASE_URL}/auth/me`,
+        method: 'GET'
+      }).then(res => setCurrentUser(res))
+    }
+  }, [accessToken])
 
   return (
-    <AuthContext.Provider value={{currentUser, login, signUp, logout}}>
+    <AuthContext.Provider value={{accessToken, currentUser, login, signUp, logout}}>
       {children}
     </AuthContext.Provider>
   )

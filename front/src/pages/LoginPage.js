@@ -21,7 +21,7 @@ const LoginPage = () => {
       const data = await login(form)
       localStorage.setItem(ACCESS_TOKEN, data.accessToken)
     } catch (e) {
-      setAlert('Something went wrong!')
+      setAlert(e.message)
     } finally {
       setLoading(false)
     }

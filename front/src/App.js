@@ -8,10 +8,10 @@ import {AdminLayout} from "./layout/AdminLayout";
 import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
-  const {currentUser} = useAuth()
+  const {accessToken, currentUser} = useAuth()
   // const currentUser = null
 
-  if (currentUser) {
+  if (accessToken && currentUser) {
     return (
       <AdminLayout>
         <Switch>

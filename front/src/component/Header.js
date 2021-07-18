@@ -1,12 +1,12 @@
 import React from 'react';
 import {Link, useHistory} from "react-router-dom";
-import {Container, Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {LinkContainer} from 'react-router-bootstrap'
 import {useAuth} from "../context/AuthContext";
 
 const Header = () => {
   const history = useHistory()
-  const {logout} = useAuth()
+  const {logout, currentUser} = useAuth()
 
   const logoutHandler = async event => {
     event.preventDefault()
@@ -22,12 +22,17 @@ const Header = () => {
           <Navbar.Toggle aria-controls="navbarCollapse"/>
           <Navbar.Collapse className="justify-content-end" id="navbarCollapse">
             <Nav>
-              <LinkContainer to="/profile">
-                <Nav.Link>Profile</Nav.Link>
-              </LinkContainer>
-              <Nav.Link onClick={logoutHandler}>
-                Sign Out <i className="bi bi-box-arrow-right"/>
-              </Nav.Link>
+              <NavDropdown id="profile" title={currentUser.username} menuVariant="dark" align="end">
+                <LinkContainer to="/profile">
+                  <NavDropdown.Item>
+                    <i className="bi bi-person"/>&nbsp;Profile
+                  </NavDropdown.Item>
+                </LinkContainer>
+                <NavDropdown.Divider/>
+                <NavDropdown.Item onClick={logoutHandler}>
+                  <i className="bi bi-box-arrow-right"/>&nbsp;Sign Out
+                </NavDropdown.Item>
+              </NavDropdown>
             </Nav>
           </Navbar.Collapse>
         </Container>

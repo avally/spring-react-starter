@@ -1,5 +1,6 @@
 package org.avally.springreactstarter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class User {
     @Getter @Setter
     private String email;
 
+    @JsonIgnore
     @NotBlank @Size(max = 120)
     @Getter @Setter
     private String password;

@@ -10,16 +10,15 @@ import org.avally.springreactstarter.repository.UserRepository;
 import org.avally.springreactstarter.security.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +46,8 @@ public class AuthController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
             User user = userRepository
                     .findByEmail(request.getEmail())
-                    .orElseThrow(() -> new UsernameNotFoundException("User with an email: " + "doesn't exists"));
+                    .orElseThrow(() -> new UsernameNotFoundException("User with an email: " + request.getEmail() +
+                            " doesn't exists"));
             String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole().name());
             Map<String, String> response = Map.of(
                     "accessToken", token,
@@ -89,5 +89,13 @@ public class AuthController {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
         securityContextLogoutHandler.logout(request, response, null);
         return ResponseEntity.ok(new MessageResponse("Logged out"));
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("hasAuthority('read')")
+    public ResponseEntity<User> getMe(Authentication authentication) {
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email).orElse(null);
+        return ResponseEntity.ok(user);
     }
 }
