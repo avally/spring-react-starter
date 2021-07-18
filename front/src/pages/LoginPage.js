@@ -5,7 +5,7 @@ import {useAuth} from "../context/AuthContext";
 import {ACCESS_TOKEN} from "../constants";
 
 const LoginPage = () => {
-  const [form, setForm] = useState({username: '', password: ''})
+  const [form, setForm] = useState({email: '', password: ''})
   const [alert, setAlert] = useState(null)
   const [loading, setLoading] = useState(false)
   const {login} = useAuth()
@@ -37,11 +37,11 @@ const LoginPage = () => {
         <Form.Group controlId="email" className="mb-3">
           <Form.Label>Username</Form.Label>
           <Form.Control
-            name="username"
-            type="text"
-            placeholder="username"
-            autoComplete="username"
-            value={form.username}
+            name="email"
+            type="email"
+            placeholder="Email"
+            autoComplete="email"
+            value={form.email}
             onChange={changeHandler}/>
         </Form.Group>
         <Form.Group controlId="password" className="mb-3">

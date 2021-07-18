@@ -1,26 +1,30 @@
 package org.avally.springreactstarter.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@Document(collection = "roles")
-public class Role {
-    //    @formatter:off
-    @Id
-    @Getter @Setter
-    private String id;
+import static org.avally.springreactstarter.model.Permission.READ;
+import static org.avally.springreactstarter.model.Permission.WRITE;
 
-    @Getter @Setter
-    private ERole name;
-    //    @formatter:on
+public enum Role {
+    USER(Set.of(READ)),
+    ADMIN(Set.of(READ, WRITE));
 
-    public Role() {
+    private final Set<Permission> permissions;
+
+    Role(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
-    public Role(ERole name) {
-        this.name = name;
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public Set<SimpleGrantedAuthority> getAuthorities() {
+        return getPermissions().stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .collect(Collectors.toSet());
     }
 }

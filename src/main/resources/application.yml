@@ -9,3 +9,4 @@ app:
   jwt:
     secret: mySecretKey
     expiration-in-ms: 86400000
+    header: Authorization

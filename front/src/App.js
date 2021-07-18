@@ -5,6 +5,7 @@ import SecuredPage from "./pages/SecuredPage";
 import SignUpPage from "./pages/SignUpPage";
 import {useAuth} from "./context/AuthContext";
 import {AdminLayout} from "./layout/AdminLayout";
+import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
   const {currentUser} = useAuth()
@@ -15,6 +16,7 @@ const App = () => {
       <AdminLayout>
         <Switch>
           <Route path="/" exact><SecuredPage/></Route>
+          <Route path="/profile" exact><ProfilePage/></Route>
           <Redirect to="/"/>
         </Switch>
       </AdminLayout>

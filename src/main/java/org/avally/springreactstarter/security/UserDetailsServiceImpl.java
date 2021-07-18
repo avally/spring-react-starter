@@ -1,4 +1,4 @@
-package org.avally.springreactstarter.security.service;
+package org.avally.springreactstarter.security;
 
 import org.avally.springreactstarter.model.User;
 import org.avally.springreactstarter.repository.UserRepository;
@@ -18,10 +18,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
 
-        return UserDetailsImpl.build(user);
+        return UserDetailsImpl.fromUser(user);
     }
 }

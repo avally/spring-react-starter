@@ -14,7 +14,7 @@ export const AuthProvider = ({children}) => {
 
   const login = (loginRequest) => {
     return request({
-      url: `${API_BASE_URL}/auth/signin`,
+      url: `${API_BASE_URL}/auth/login`,
       method: 'POST',
       body: JSON.stringify(loginRequest)
     })
@@ -29,8 +29,16 @@ export const AuthProvider = ({children}) => {
   }
 
   const logout = () => {
-    localStorage.removeItem(ACCESS_TOKEN)
-    setCurrentUser(null)
+    request({
+      url: `${API_BASE_URL}/auth/logout`,
+      method: 'POST'
+    }).catch(() => {
+      localStorage.removeItem(ACCESS_TOKEN)
+      setCurrentUser(null)
+    }).finally(() => {
+      localStorage.removeItem(ACCESS_TOKEN)
+      setCurrentUser(null)
+    })
   }
 
   const getCurrentUser = (token) => {

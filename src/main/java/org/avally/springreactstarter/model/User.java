@@ -1,17 +1,18 @@
 package org.avally.springreactstarter.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "users")
 public class User {
     //    @formatter:off
@@ -31,17 +32,19 @@ public class User {
     @Getter @Setter
     private String password;
 
-    @DBRef
     @Getter @Setter
-    private Set<Role> roles = new HashSet<>();
+    private Role role;
+
+    @Getter @Setter
+    private Status status;
     //    @formatter:on
 
-    public User() {
-    }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, Role role, Status status) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
+        this.status = status;
     }
 }

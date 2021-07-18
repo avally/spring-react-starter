@@ -10,7 +10,7 @@ export const useHttp = () => {
     try{
       const headers = new Headers({'Content-Type': 'application/json'})
       if (localStorage.getItem(ACCESS_TOKEN)) {
-        headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
+        headers.append('Authorization', localStorage.getItem(ACCESS_TOKEN))
       }
       options = {headers, ...options}
       const res = await fetch(options.url, options)

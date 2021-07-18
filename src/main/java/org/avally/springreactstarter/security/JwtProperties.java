@@ -1,4 +1,4 @@
-package org.avally.springreactstarter.security.jwt;
+package org.avally.springreactstarter.security;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +11,8 @@ public class JwtProperties {
     @Getter @Setter
     private String secret;
     @Getter @Setter
-    private int expirationInMs;
+    private Long expirationInMs;
+    @Getter @Setter
+    private String header = "Authorization";
     //    formatter:on
 }

@@ -3,13 +3,14 @@ package org.avally.springreactstarter.payload.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
     //    @formatter:off
-    @NotBlank
+    @NotBlank @Email
     @Getter @Setter
-    private String username;
+    private String email;
 
     @NotBlank
     @Getter @Setter
